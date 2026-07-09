@@ -34,7 +34,7 @@ onMounted(() => requestAnimationFrame(() => (entered.value = true)))
 
       <figure class="hero__media" data-cursor>
         <img :src="heroGif" alt="wayke" loading="eager" />
-        <figcaption>рационально · с характером</figcaption>
+        <figcaption>абсолютный · geek</figcaption>
       </figure>
     </div>
 
