@@ -1,5 +1,7 @@
 <script setup lang="ts">
+import { RouterLink } from 'vue-router'
 import { contacts } from '@/data/content'
+import { scrollToId } from '@/utils/scroll'
 const year = new Date().getFullYear()
 </script>
 
@@ -10,12 +12,15 @@ const year = new Date().getFullYear()
       <div class="ftr__links">
         <a :href="contacts.telegram" target="_blank" rel="noopener">Telegram</a>
         <a :href="contacts.github" target="_blank" rel="noopener">GitHub</a>
-        <a href="#top">Наверх ↑</a>
+        <a href="#top" @click.prevent="scrollToId('top')">Наверх ↑</a>
       </div>
     </div>
     <div class="ftr__base">
       <span>© {{ year }} wayke — фронтенд-разработчик, Россия</span>
-      <span>Сделано на Vue 3 + TypeScript</span>
+      <span class="ftr__meta">
+        Сделано на Vue 3 + TypeScript
+        <RouterLink to="/admin" class="ftr__admin">Админка</RouterLink>
+      </span>
     </div>
   </footer>
 </template>
@@ -61,6 +66,19 @@ const year = new Date().getFullYear()
   font-size: 0.8rem;
   border-top: 1px solid var(--line);
   padding-top: 24px;
+}
+.ftr__meta {
+  display: inline-flex;
+  gap: 16px;
+  align-items: center;
+}
+.ftr__admin {
+  color: var(--dim);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.ftr__admin:hover {
+  color: var(--accent);
 }
 @media (max-width: 560px) {
   .ftr__row {

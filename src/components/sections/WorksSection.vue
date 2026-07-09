@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import WorkItem from '@/components/WorkItem.vue'
-import { works } from '@/data/works'
+import { useWorks } from '@/stores/works'
+
+const store = useWorks()
 </script>
 
 <template>
@@ -16,7 +18,7 @@ import { works } from '@/data/works'
     </header>
 
     <div class="works__grid">
-      <WorkItem v-for="work in works" :key="work.index" :work="work" />
+      <WorkItem v-for="work in store.items" :key="work.id" :work="work" />
     </div>
   </section>
 </template>

@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { onMounted, onBeforeUnmount, ref } from 'vue'
 import { contacts } from '@/data/content'
+import { scrollToId } from '@/utils/scroll'
 
 const nav = [
-  { href: '#works', label: 'Работы' },
-  { href: '#services', label: 'Услуги' },
-  { href: '#about', label: 'О себе' },
-  { href: '#contact', label: 'Контакт' },
+  { id: 'works', label: 'Работы' },
+  { id: 'services', label: 'Услуги' },
+  { id: 'about', label: 'О себе' },
+  { id: 'contact', label: 'Контакт' },
 ]
 
 const scrolled = ref(false)
@@ -20,11 +21,16 @@ onBeforeUnmount(() => window.removeEventListener('scroll', onScroll))
 <template>
   <header class="hdr" :class="{ 'hdr--scrolled': scrolled }">
     <div class="hdr__row shell">
-      <a href="#top" class="hdr__logo">wayke<sup>©</sup></a>
+      <a href="#top" class="hdr__logo" @click.prevent="scrollToId('top')">wayke<sup>©</sup></a>
       <nav class="hdr__nav">
-        <a v-for="item in nav" :key="item.href" :href="item.href" class="hdr__link">{{
-          item.label
-        }}</a>
+        <a
+          v-for="item in nav"
+          :key="item.id"
+          :href="`#${item.id}`"
+          class="hdr__link"
+          @click.prevent="scrollToId(item.id)"
+          >{{ item.label }}</a
+        >
       </nav>
       <a :href="contacts.telegram" target="_blank" rel="noopener" class="hdr__cta">
         <span class="hdr__dot" />Свободен для заказов

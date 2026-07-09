@@ -1,13 +1,15 @@
 <script setup lang="ts">
-import type { Work } from '@/data/works'
+import { computed } from 'vue'
+import { resolveImage, type Work } from '@/data/works'
 
-defineProps<{ work: Work }>()
+const props = defineProps<{ work: Work }>()
+const cover = computed(() => resolveImage(props.work))
 </script>
 
 <template>
   <a :href="work.url" target="_blank" rel="noopener" class="work reveal" data-cursor>
-    <div class="work__media" :class="{ 'work__media--blank': !work.image }">
-      <img v-if="work.image" :src="work.image" :alt="work.title" loading="lazy" />
+    <div class="work__media" :class="{ 'work__media--blank': !cover }">
+      <img v-if="cover" :src="cover" :alt="work.title" loading="lazy" />
       <span v-else class="work__blank-title">{{ work.title }}</span>
       <span class="work__index">{{ work.index }}</span>
       <span v-if="work.live" class="work__live">● в проде</span>

@@ -1,21 +1,32 @@
 <script setup lang="ts">
-withDefaults(
+import { scrollToId } from '@/utils/scroll'
+
+const props = withDefaults(
   defineProps<{
     href?: string
+    to?: string
     variant?: 'solid' | 'outline'
     size?: 'md' | 'lg'
   }>(),
-  { variant: 'solid', size: 'md' },
+  { href: undefined, to: undefined, variant: 'solid', size: 'md' },
 )
+
+function onClick(event: MouseEvent): void {
+  if (props.to) {
+    event.preventDefault()
+    scrollToId(props.to)
+  }
+}
 </script>
 
 <template>
   <a
-    :href="href"
-    :target="href ? '_blank' : undefined"
-    :rel="href ? 'noopener' : undefined"
+    :href="to ? `#${to}` : href"
+    :target="href && !to ? '_blank' : undefined"
+    :rel="href && !to ? 'noopener' : undefined"
     class="btn"
     :class="[`btn--${variant}`, `btn--${size}`]"
+    @click="onClick"
   >
     <span class="btn__label"><slot /></span>
     <span class="btn__arrow" aria-hidden="true">↗</span>

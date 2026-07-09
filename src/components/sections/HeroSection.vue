@@ -3,6 +3,7 @@ import { onMounted, ref } from 'vue'
 import AppButton from '@/components/ui/AppButton.vue'
 import heroGif from '@/assets/img/wayke-hero.gif'
 import { contacts } from '@/data/content'
+import { scrollToId } from '@/utils/scroll'
 
 const entered = ref(false)
 onMounted(() => requestAnimationFrame(() => (entered.value = true)))
@@ -25,7 +26,7 @@ onMounted(() => requestAnimationFrame(() => (entered.value = true)))
           руками, без конструкторов.
         </p>
         <div class="hero__cta">
-          <AppButton href="#works" variant="solid" size="lg">Смотреть работы</AppButton>
+          <AppButton to="works" variant="solid" size="lg">Смотреть работы</AppButton>
           <AppButton :href="contacts.telegram" variant="outline" size="lg">
             Написать в Telegram
           </AppButton>
@@ -38,7 +39,7 @@ onMounted(() => requestAnimationFrame(() => (entered.value = true)))
       </figure>
     </div>
 
-    <a href="#works" class="hero__scroll">
+    <a href="#works" class="hero__scroll" @click.prevent="scrollToId('works')">
       <span>Листай вниз</span>
       <span class="hero__scroll-line" />
     </a>
