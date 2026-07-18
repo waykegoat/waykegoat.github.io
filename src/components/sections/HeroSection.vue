@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import AppButton from '@/components/ui/AppButton.vue'
-import heroGif from '@/assets/img/wayke-hero.gif'
+import heroVideo from '@/assets/img/wayke-hero.mp4'
+import heroPoster from '@/assets/img/wayke-hero-poster.jpg'
 import { contacts } from '@/data/content'
 import { scrollToId } from '@/utils/scroll'
 
 const entered = ref(false)
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 onMounted(() => requestAnimationFrame(() => (entered.value = true)))
 </script>
 
@@ -34,7 +36,16 @@ onMounted(() => requestAnimationFrame(() => (entered.value = true)))
       </div>
 
       <figure class="hero__media" data-cursor>
-        <img :src="heroGif" alt="wayke" loading="eager" />
+        <video
+          v-if="!reducedMotion"
+          :src="heroVideo"
+          :poster="heroPoster"
+          autoplay
+          muted
+          loop
+          playsinline
+        />
+        <img v-else :src="heroPoster" alt="wayke" />
         <figcaption>абсолютный · geek</figcaption>
       </figure>
     </div>
@@ -130,7 +141,8 @@ onMounted(() => requestAnimationFrame(() => (entered.value = true)))
   opacity: 1;
   transform: rotate(3deg);
 }
-.hero__media img {
+.hero__media img,
+.hero__media video {
   width: 100%;
   aspect-ratio: 5 / 3;
   object-fit: cover;
