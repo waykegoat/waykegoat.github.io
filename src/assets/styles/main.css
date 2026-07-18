@@ -117,7 +117,6 @@ h3 {
   background: var(--accent);
 }
 
-/* Reveal on scroll */
 .reveal {
   opacity: 0;
   transform: translateY(40px);
@@ -139,7 +138,6 @@ h3 {
   transition-delay: 0.24s;
 }
 
-/* Marquee */
 .marquee {
   display: flex;
   overflow: hidden;
@@ -162,7 +160,6 @@ h3 {
   }
 }
 
-/* Custom cursor */
 .cursor {
   position: fixed;
   top: 0;

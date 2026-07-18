@@ -5,7 +5,6 @@ import worksData from './works.json'
 
 export type ImageKey = 'auto' | 'beauty' | 'restaurant'
 
-/** Встроенные (забандленные) скриншоты дефолтных работ. */
 export const bundledImages: Record<ImageKey, string> = {
   auto: shotAuto,
   beauty: shotBeauty,
@@ -22,13 +21,10 @@ export interface Work {
   url: string
   year: string
   live?: boolean
-  /** Загруженная вручную картинка (data-URL). Приоритетнее imageKey. */
   image?: string
-  /** Ключ встроенной картинки для дефолтных работ. */
   imageKey?: ImageKey
 }
 
-/** Итоговый src обложки: ручная загрузка → встроенная → нет. */
 export function resolveImage(work: Work): string | undefined {
   if (work.image) return work.image
   if (work.imageKey) return bundledImages[work.imageKey]

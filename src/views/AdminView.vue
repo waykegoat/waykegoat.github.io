@@ -28,7 +28,6 @@ function logout(): void {
   sessionStorage.removeItem(AUTH_KEY)
 }
 
-/* ── Редактор работы ── */
 const draft = reactive<Work>(emptyWork())
 const tagsInput = ref('')
 const isNew = ref(false)
@@ -87,7 +86,6 @@ function saveDraft(): void {
   editorOpen.value = false
 }
 
-/* ── Экспорт / импорт / сброс ── */
 function download(name: string, text: string): void {
   const blob = new Blob([text], { type: 'application/json' })
   const url = URL.createObjectURL(blob)
@@ -122,7 +120,6 @@ function resetAll(): void {
 
 <template>
   <div class="admin">
-    <!-- Логин -->
     <div v-if="!authed" class="gate">
       <form class="gate__box" @submit.prevent="login">
         <h1 class="gate__title">Админка</h1>
@@ -140,7 +137,6 @@ function resetAll(): void {
       </form>
     </div>
 
-    <!-- Панель -->
     <div v-else class="panel">
       <header class="panel__top">
         <div>
@@ -170,7 +166,6 @@ function resetAll(): void {
         передеплойте. Локально всё сохраняется автоматически.
       </p>
 
-      <!-- Список работ -->
       <ul class="list">
         <li v-for="(work, i) in store.items" :key="work.id" class="row">
           <span class="row__idx">{{ work.index }}</span>
@@ -202,7 +197,6 @@ function resetAll(): void {
       </ul>
     </div>
 
-    <!-- Модалка редактора -->
     <div v-if="authed && editorOpen" class="modal" @click.self="closeEditor">
       <div class="editor">
         <div class="editor__head">

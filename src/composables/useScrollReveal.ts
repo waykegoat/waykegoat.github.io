@@ -1,9 +1,5 @@
 import { onMounted, onBeforeUnmount } from 'vue'
 
-/**
- * Плавно показывает элементы с классом `.reveal` при попадании во вьюпорт.
- * Один IntersectionObserver на всё приложение, подключается в корне.
- */
 export function useScrollReveal(): void {
   let observer: IntersectionObserver | null = null
 

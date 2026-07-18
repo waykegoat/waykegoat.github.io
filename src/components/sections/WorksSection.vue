@@ -45,10 +45,6 @@ const store = useWorks()
   grid-template-columns: repeat(2, 1fr);
   gap: clamp(30px, 5vw, 70px) clamp(24px, 3vw, 50px);
 }
-.works__grid > :nth-child(4n + 1),
-.works__grid > :nth-child(4n) {
-  /* subtle vertical rhythm variation */
-}
 @media (max-width: 820px) {
   .works__grid {
     grid-template-columns: 1fr;

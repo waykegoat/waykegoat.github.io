@@ -15,7 +15,7 @@ function load(): Work[] {
       if (Array.isArray(parsed) && parsed.length > 0) return parsed as Work[]
     }
   } catch {
-    /* повреждённые данные — откатимся на дефолт */
+    return clone(defaultWorks)
   }
   return clone(defaultWorks)
 }
@@ -34,7 +34,7 @@ watch(
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(items))
     } catch {
-      /* превышена квота localStorage — картинки слишком тяжёлые */
+      return
     }
   },
   { deep: true },
