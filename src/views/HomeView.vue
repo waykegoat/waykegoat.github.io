@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useScrollReveal } from '@/composables/useScrollReveal'
 import CustomCursor from '@/components/layout/CustomCursor.vue'
 import SiteHeader from '@/components/layout/SiteHeader.vue'
@@ -11,7 +13,8 @@ import ContactSection from '@/components/sections/ContactSection.vue'
 import MarqueeLine from '@/components/ui/MarqueeLine.vue'
 import { stack } from '@/data/content'
 
-const ctaWords = ['доступен для заказов', 'сделаю сайт под ключ', 'напишите мне']
+const { t } = useI18n()
+const ctaWords = computed(() => [t('strip.cta1'), t('strip.cta2'), t('strip.cta3')])
 
 useScrollReveal()
 </script>

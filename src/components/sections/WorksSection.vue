@@ -1,19 +1,29 @@
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
 import WorkItem from '@/components/WorkItem.vue'
 import { useWorks } from '@/stores/works'
 
+const { t } = useI18n()
 const store = useWorks()
 </script>
 
 <template>
   <section id="works" class="works shell">
     <header class="works__head">
-      <span class="label reveal">Избранные работы</span>
-      <h2 class="display-lg works__title reveal" data-delay="1">
-        Проекты, <span class="accent">которыми горжусь</span>
-      </h2>
+      <span class="label reveal">{{ t('works.label') }}</span>
+      <i18n-t
+        keypath="works.title"
+        tag="h2"
+        class="display-lg works__title reveal"
+        data-delay="1"
+        scope="global"
+      >
+        <template #accent>
+          <span class="accent">{{ t('works.titleAccent') }}</span>
+        </template>
+      </i18n-t>
       <p class="works__note reveal" data-delay="2">
-        Реальные сайты на Vue и React — от коммерческого проекта в проде до демо-кейсов под ниши.
+        {{ t('works.note') }}
       </p>
     </header>
 

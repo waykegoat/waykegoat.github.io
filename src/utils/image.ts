@@ -1,4 +1,8 @@
-export function fileToCompressedDataUrl(file: File, maxWidth = 1400, quality = 0.82): Promise<string> {
+export function fileToCompressedDataUrl(
+  file: File,
+  maxWidth = 1400,
+  quality = 0.82,
+): Promise<string> {
   return new Promise((resolve, reject) => {
     const reader = new FileReader()
 

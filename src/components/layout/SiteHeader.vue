@@ -1,14 +1,18 @@
 <script setup lang="ts">
-import { onMounted, onBeforeUnmount, ref } from 'vue'
+import { computed, onMounted, onBeforeUnmount, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
+import LangSwitch from '@/components/ui/LangSwitch.vue'
 import { contacts } from '@/data/content'
 import { scrollToId } from '@/utils/scroll'
 
-const nav = [
-  { id: 'works', label: 'Работы' },
-  { id: 'services', label: 'Услуги' },
-  { id: 'about', label: 'О себе' },
-  { id: 'contact', label: 'Контакт' },
-]
+const { t } = useI18n()
+
+const nav = computed(() => [
+  { id: 'works', label: t('nav.works') },
+  { id: 'services', label: t('nav.services') },
+  { id: 'about', label: t('nav.about') },
+  { id: 'contact', label: t('nav.contact') },
+])
 
 const scrolled = ref(false)
 function onScroll(): void {
@@ -32,9 +36,12 @@ onBeforeUnmount(() => window.removeEventListener('scroll', onScroll))
           >{{ item.label }}</a
         >
       </nav>
-      <a :href="contacts.telegram" target="_blank" rel="noopener" class="hdr__cta">
-        <span class="hdr__dot" />Свободен для заказов
-      </a>
+      <div class="hdr__side">
+        <LangSwitch />
+        <a :href="contacts.telegram" target="_blank" rel="noopener" class="hdr__cta">
+          <span class="hdr__dot" />{{ t('header.cta') }}
+        </a>
+      </div>
     </div>
   </header>
 </template>
@@ -85,6 +92,11 @@ onBeforeUnmount(() => window.removeEventListener('scroll', onScroll))
 }
 .hdr__link:hover {
   color: var(--text);
+}
+.hdr__side {
+  display: flex;
+  align-items: center;
+  gap: 14px;
 }
 .hdr__cta {
   display: inline-flex;

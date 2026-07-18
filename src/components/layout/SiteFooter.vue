@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { contacts } from '@/data/content'
 import { scrollToId } from '@/utils/scroll'
+
+const { t } = useI18n()
 const year = new Date().getFullYear()
 </script>
 
@@ -12,14 +15,14 @@ const year = new Date().getFullYear()
       <div class="ftr__links">
         <a :href="contacts.telegram" target="_blank" rel="noopener">Telegram</a>
         <a :href="contacts.github" target="_blank" rel="noopener">GitHub</a>
-        <a href="#top" @click.prevent="scrollToId('top')">Наверх ↑</a>
+        <a href="#top" @click.prevent="scrollToId('top')">{{ t('footer.toTop') }}</a>
       </div>
     </div>
     <div class="ftr__base">
-      <span>© {{ year }} wayke — фронтенд-разработчик, Россия</span>
+      <span>{{ t('footer.copyright', { year }) }}</span>
       <span class="ftr__meta">
-        Сделано на Vue 3 + TypeScript
-        <RouterLink to="/admin" class="ftr__admin">Админка</RouterLink>
+        {{ t('footer.builtWith') }}
+        <RouterLink to="/admin" class="ftr__admin">{{ t('footer.admin') }}</RouterLink>
       </span>
     </div>
   </footer>

@@ -1,23 +1,46 @@
 <script setup lang="ts">
-import { stats } from '@/data/content'
+import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { useWorks } from '@/stores/works'
+
+const { t } = useI18n()
+const store = useWorks()
+
+const stats = computed(() => [
+  { value: '20+', label: t('about.stats.github') },
+  { value: String(store.items.length), label: t('about.stats.portfolio') },
+  { value: '2', label: t('about.stats.frameworks') },
+  { value: '∞', label: t('about.stats.detail') },
+])
 </script>
 
 <template>
   <section id="about" class="about">
     <div class="shell">
-      <span class="label about__label reveal">Обо мне</span>
-      <h2 class="about__statement reveal" data-delay="1">
-        Фронтенд, которому <span class="about__mark">не всё равно</span>. Пишу чистый код, думаю о
-        пользователе и добиваю проект до пикселя.
-      </h2>
+      <span class="label about__label reveal">{{ t('about.label') }}</span>
+      <i18n-t
+        keypath="about.statement"
+        tag="h2"
+        class="about__statement reveal"
+        data-delay="1"
+        scope="global"
+      >
+        <template #mark>
+          <span class="about__mark">{{ t('about.statementMark') }}</span>
+        </template>
+      </i18n-t>
 
       <div class="about__grid">
         <p class="about__text reveal" data-delay="1">
-          Работаю на Vue 3 и React с TypeScript. Ускоряюсь за счёт ИИ — короче сроки и адекватнее
-          цена без потери качества. Могу закрыть и лёгкий бэкенд на Go.
+          {{ t('about.text') }}
         </p>
         <ul class="about__stats">
-          <li v-for="(s, i) in stats" :key="s.label" class="reveal" :data-delay="String((i % 3) + 1)">
+          <li
+            v-for="(s, i) in stats"
+            :key="s.label"
+            class="reveal"
+            :data-delay="String((i % 3) + 1)"
+          >
             <span class="about__value">{{ s.value }}</span>
             <span class="about__stat-label">{{ s.label }}</span>
           </li>

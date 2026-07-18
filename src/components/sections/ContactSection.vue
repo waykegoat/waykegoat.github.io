@@ -1,15 +1,18 @@
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
 import { contacts } from '@/data/content'
+
+const { t } = useI18n()
 </script>
 
 <template>
   <section id="contact" class="contact shell">
-    <span class="label reveal">Контакт</span>
+    <span class="label reveal">{{ t('contact.label') }}</span>
     <h2 class="display-xl contact__title reveal" data-delay="1">
-      Давайте<br /><span class="accent">работать</span>
+      {{ t('contact.titleTop') }}<br /><span class="accent">{{ t('contact.titleAccent') }}</span>
     </h2>
     <p class="contact__note reveal" data-delay="2">
-      Расскажите задачу — оценю бесплатно и покажу примеры. Обычно отвечаю в течение часа.
+      {{ t('contact.note') }}
     </p>
 
     <div class="contact__links">

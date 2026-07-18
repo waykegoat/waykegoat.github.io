@@ -1,32 +1,38 @@
 <script setup lang="ts">
-import { services, stack } from '@/data/content'
+import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { stack } from '@/data/content'
+import type { MessageSchema } from '@/i18n'
+
+const { t, tm, rt } = useI18n()
+const services = computed(() => tm('services.items') as MessageSchema['services']['items'])
 </script>
 
 <template>
   <section id="services" class="services shell">
     <header class="services__head">
-      <span class="label reveal">Услуги</span>
-      <h2 class="display-lg services__title reveal" data-delay="1">Что я делаю</h2>
+      <span class="label reveal">{{ t('services.label') }}</span>
+      <h2 class="display-lg services__title reveal" data-delay="1">{{ t('services.title') }}</h2>
       <p class="services__note reveal" data-delay="2">
-        Набираю портфолио — поэтому делаю выгодно. Точную стоимость назову после ТЗ.
+        {{ t('services.note') }}
       </p>
     </header>
 
     <ul class="services__list">
-      <li v-for="s in services" :key="s.no" class="srv reveal" data-cursor>
-        <span class="srv__no">{{ s.no }}</span>
+      <li v-for="s in services" :key="rt(s.no)" class="srv reveal" data-cursor>
+        <span class="srv__no">{{ rt(s.no) }}</span>
         <div class="srv__body">
-          <h3 class="srv__title">{{ s.title }}</h3>
-          <p class="srv__text">{{ s.text }}</p>
+          <h3 class="srv__title">{{ rt(s.title) }}</h3>
+          <p class="srv__text">{{ rt(s.text) }}</p>
         </div>
-        <span class="srv__from">{{ s.from }}</span>
+        <span v-if="rt(s.from)" class="srv__from">{{ rt(s.from) }}</span>
       </li>
     </ul>
 
     <div class="services__stack reveal">
-      <span class="services__stack-label">Стек</span>
+      <span class="services__stack-label">{{ t('services.stack') }}</span>
       <div class="services__stack-items">
-        <span v-for="t in stack" :key="t">{{ t }}</span>
+        <span v-for="item in stack" :key="item">{{ item }}</span>
       </div>
     </div>
   </section>

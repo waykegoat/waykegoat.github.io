@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { resolveImage, type Work } from '@/data/works'
 
+const { t } = useI18n()
 const props = defineProps<{ work: Work }>()
 const cover = computed(() => resolveImage(props.work))
 </script>
@@ -12,8 +14,8 @@ const cover = computed(() => resolveImage(props.work))
       <img v-if="cover" :src="cover" :alt="work.title" loading="lazy" />
       <span v-else class="work__blank-title">{{ work.title }}</span>
       <span class="work__index">{{ work.index }}</span>
-      <span v-if="work.live" class="work__live">● в проде</span>
-      <span class="work__open">Смотреть <b>↗</b></span>
+      <span v-if="work.live" class="work__live">● {{ t('works.live') }}</span>
+      <span class="work__open">{{ t('works.open') }} <b>↗</b></span>
     </div>
     <div class="work__meta">
       <div class="work__head">

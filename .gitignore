@@ -7,3 +7,4 @@ dist-ssr
 .vscode/*
 !.vscode/extensions.json
 node_modules/.tmp
+.claude/

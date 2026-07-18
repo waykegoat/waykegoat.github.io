@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import AppButton from '@/components/ui/AppButton.vue'
 import heroVideo from '@/assets/img/wayke-hero.mp4'
 import heroPoster from '@/assets/img/wayke-hero-poster.jpg'
 import { contacts } from '@/data/content'
 import { scrollToId } from '@/utils/scroll'
+
+const { t } = useI18n()
 
 const entered = ref(false)
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -14,8 +17,8 @@ onMounted(() => requestAnimationFrame(() => (entered.value = true)))
 <template>
   <section id="top" class="hero shell" :class="{ 'hero--in': entered }">
     <div class="hero__meta">
-      <span class="label">Фронтенд-разработчик</span>
-      <span class="hero__loc">Владимир · Россия — доступен для заказов</span>
+      <span class="label">{{ t('hero.role') }}</span>
+      <span class="hero__loc">{{ t('hero.location') }}</span>
     </div>
 
     <div class="hero__grid">
@@ -23,14 +26,15 @@ onMounted(() => requestAnimationFrame(() => (entered.value = true)))
         <h1 class="display-xl hero__name">
           <span class="hero__word">wayke</span>
         </h1>
-        <p class="hero__statement">
-          Собираю <span class="accent">сайты и интерфейсы</span>, которые продают — на Vue и React,
-          руками, без конструкторов.
-        </p>
+        <i18n-t keypath="hero.statement" tag="p" class="hero__statement" scope="global">
+          <template #accent>
+            <span class="accent">{{ t('hero.statementAccent') }}</span>
+          </template>
+        </i18n-t>
         <div class="hero__cta">
-          <AppButton to="works" variant="solid" size="lg">Смотреть работы</AppButton>
+          <AppButton to="works" variant="solid" size="lg">{{ t('hero.ctaWorks') }}</AppButton>
           <AppButton :href="contacts.telegram" variant="outline" size="lg">
-            Написать в Telegram
+            {{ t('hero.ctaTelegram') }}
           </AppButton>
         </div>
       </div>
@@ -46,12 +50,12 @@ onMounted(() => requestAnimationFrame(() => (entered.value = true)))
           playsinline
         />
         <img v-else :src="heroPoster" alt="wayke" />
-        <figcaption>абсолютный · geek</figcaption>
+        <figcaption>{{ t('hero.caption') }}</figcaption>
       </figure>
     </div>
 
     <a href="#works" class="hero__scroll" @click.prevent="scrollToId('works')">
-      <span>Листай вниз</span>
+      <span>{{ t('hero.scroll') }}</span>
       <span class="hero__scroll-line" />
     </a>
   </section>
