@@ -1,15 +1,16 @@
-import shotAuto from '@/assets/img/shot-autoservice.jpg'
-import shotBeauty from '@/assets/img/shot-beauty.jpg'
-import shotRestaurant from '@/assets/img/shot-restaurant.jpg'
 import worksData from './works.json'
 
-export type ImageKey = 'auto' | 'beauty' | 'restaurant'
+const imageModules = import.meta.glob<string>('@/assets/img/works/*.jpg', {
+  eager: true,
+  import: 'default',
+})
 
-export const bundledImages: Record<ImageKey, string> = {
-  auto: shotAuto,
-  beauty: shotBeauty,
-  restaurant: shotRestaurant,
-}
+export const bundledImages: Record<string, string> = Object.fromEntries(
+  Object.entries(imageModules).map(([path, url]) => [
+    path.replace(/^.*\/([^/]+)\.jpg$/, '$1'),
+    url,
+  ]),
+)
 
 export interface Work {
   id: string
@@ -22,7 +23,7 @@ export interface Work {
   year: string
   live?: boolean
   image?: string
-  imageKey?: ImageKey
+  imageKey?: string
 }
 
 export function resolveImage(work: Work): string | undefined {

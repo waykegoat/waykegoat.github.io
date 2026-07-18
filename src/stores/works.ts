@@ -98,9 +98,5 @@ export function useWorks() {
       items.splice(0, items.length, ...clone(list))
       reindex()
     },
-
-    exportJson(): string {
-      return JSON.stringify(items, null, 2)
-    },
   }
 }

@@ -86,17 +86,28 @@ function saveDraft(): void {
   editorOpen.value = false
 }
 
-function download(name: string, text: string): void {
-  const blob = new Blob([text], { type: 'application/json' })
-  const url = URL.createObjectURL(blob)
+function download(name: string, href: string): void {
   const a = document.createElement('a')
-  a.href = url
+  a.href = href
   a.download = name
   a.click()
-  URL.revokeObjectURL(url)
 }
-function exportJson(): void {
-  download('works.json', store.exportJson())
+function exportAll(): void {
+  const list = store.items.map((work) => {
+    const copy: Work = { ...work, tags: [...work.tags] }
+    if (copy.image) {
+      delete copy.image
+      copy.imageKey = work.id
+    }
+    return copy
+  })
+  const blob = new Blob([JSON.stringify(list, null, 2) + '\n'], { type: 'application/json' })
+  const url = URL.createObjectURL(blob)
+  download('works.json', url)
+  URL.revokeObjectURL(url)
+  store.items.forEach((work) => {
+    if (work.image) download(`${work.id}.jpg`, work.image)
+  })
 }
 function importJson(event: Event): void {
   const file = (event.target as HTMLInputElement).files?.[0]
@@ -124,13 +135,7 @@ function resetAll(): void {
       <form class="gate__box" @submit.prevent="login">
         <h1 class="gate__title">Админка</h1>
         <p class="gate__hint">Введите пароль для управления портфолио.</p>
-        <input
-          v-model="passwordInput"
-          type="password"
-          class="inp"
-          placeholder="Пароль"
-          autofocus
-        />
+        <input v-model="passwordInput" type="password" class="inp" placeholder="Пароль" autofocus />
         <p v-if="authError" class="gate__err">{{ authError }}</p>
         <button type="submit" class="btn-a btn-a--solid">Войти</button>
         <RouterLink to="/" class="gate__back">← на сайт</RouterLink>
@@ -153,7 +158,7 @@ function resetAll(): void {
 
       <div class="toolbar">
         <button class="btn-a btn-a--solid" @click="openNew">+ Добавить работу</button>
-        <button class="btn-a" @click="exportJson">↓ Экспорт JSON</button>
+        <button class="btn-a" @click="exportAll">↓ Экспорт</button>
         <label class="btn-a">
           ↑ Импорт JSON
           <input type="file" accept="application/json" hidden @change="importJson" />
@@ -162,8 +167,9 @@ function resetAll(): void {
       </div>
 
       <p class="note">
-        Чтобы изменения увидели посетители — нажмите «Экспорт JSON», положите файл в проект и
-        передеплойте. Локально всё сохраняется автоматически.
+        Чтобы изменения увидели посетители — нажмите «Экспорт»: works.json положите в src/data/,
+        скачанные картинки — в src/assets/img/works/, затем передеплойте. Локально всё сохраняется
+        автоматически.
       </p>
 
       <ul class="list">
@@ -191,7 +197,9 @@ function resetAll(): void {
               ↓
             </button>
             <button class="btn-a" @click="openEdit(work)">Редактировать</button>
-            <button class="ico ico--danger" title="Удалить" @click="store.remove(work.id)">✕</button>
+            <button class="ico ico--danger" title="Удалить" @click="store.remove(work.id)">
+              ✕
+            </button>
           </div>
         </li>
       </ul>
@@ -221,13 +229,14 @@ function resetAll(): void {
           <label class="fld"
             ><span>Название *</span><input v-model="draft.title" class="inp"
           /></label>
-          <label class="fld"><span>Категория</span><input v-model="draft.kind" class="inp" /></label>
           <label class="fld"
-            ><span>Описание</span><textarea v-model="draft.description" class="inp" rows="3"
+            ><span>Категория</span><input v-model="draft.kind" class="inp"
           /></label>
           <label class="fld"
-            ><span>Ссылка *</span
-            ><input v-model="draft.url" class="inp" placeholder="https://…"
+            ><span>Описание</span><textarea v-model="draft.description" class="inp" rows="3" />
+          </label>
+          <label class="fld"
+            ><span>Ссылка *</span><input v-model="draft.url" class="inp" placeholder="https://…"
           /></label>
           <div class="editor__two">
             <label class="fld"><span>Год</span><input v-model="draft.year" class="inp" /></label>
