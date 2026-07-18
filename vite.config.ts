@@ -1,6 +1,7 @@
 import { copyFileSync } from 'node:fs'
 import { fileURLToPath, URL } from 'node:url'
-import { defineConfig, type Plugin } from 'vite'
+import { defineConfig } from 'vitest/config'
+import type { Plugin } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
 function spaFallback(): Plugin {
@@ -27,5 +28,8 @@ export default defineConfig({
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
+  },
+  test: {
+    environment: 'jsdom',
   },
 })
