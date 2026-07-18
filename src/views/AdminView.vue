@@ -5,7 +5,7 @@ import { emptyWork, useWorks } from '@/stores/works'
 import { resolveImage, type Work } from '@/data/works'
 import { fileToCompressedDataUrl } from '@/utils/image'
 
-const PASSWORD = 'wayke2026'
+const PASSWORD_HASH = 'f7e7c2ea138799c0283ae6cf57233970a922f226cc4d97b6b5a4f37cfac1056b'
 const AUTH_KEY = 'wayke.admin.authed'
 
 const store = useWorks()
@@ -14,8 +14,13 @@ const authed = ref(sessionStorage.getItem(AUTH_KEY) === '1')
 const passwordInput = ref('')
 const authError = ref('')
 
-function login(): void {
-  if (passwordInput.value === PASSWORD) {
+async function sha256Hex(text: string): Promise<string> {
+  const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text))
+  return Array.from(new Uint8Array(digest), (b) => b.toString(16).padStart(2, '0')).join('')
+}
+
+async function login(): Promise<void> {
+  if ((await sha256Hex(passwordInput.value)) === PASSWORD_HASH) {
     authed.value = true
     sessionStorage.setItem(AUTH_KEY, '1')
     authError.value = ''
@@ -29,7 +34,8 @@ function logout(): void {
 }
 
 const draft = reactive<Work>(emptyWork())
-const tagsInput = ref('')
+const tagsRu = ref('')
+const tagsEn = ref('')
 const isNew = ref(false)
 const editorOpen = ref(false)
 const uploadError = ref('')
@@ -37,14 +43,16 @@ const busy = ref(false)
 
 function openNew(): void {
   Object.assign(draft, emptyWork())
-  tagsInput.value = ''
+  tagsRu.value = ''
+  tagsEn.value = ''
   isNew.value = true
   editorOpen.value = true
   uploadError.value = ''
 }
 function openEdit(work: Work): void {
   Object.assign(draft, JSON.parse(JSON.stringify(work)))
-  tagsInput.value = work.tags.join(', ')
+  tagsRu.value = work.content.ru.tags.join(', ')
+  tagsEn.value = work.content.en.tags.join(', ')
   isNew.value = false
   editorOpen.value = true
   uploadError.value = ''
@@ -72,17 +80,28 @@ function clearCover(): void {
   draft.imageKey = undefined
 }
 
-function saveDraft(): void {
-  draft.tags = tagsInput.value
+function parseTags(value: string): string[] {
+  return value
     .split(',')
     .map((t) => t.trim())
     .filter(Boolean)
-  if (!draft.title.trim() || !draft.url.trim()) {
-    uploadError.value = 'Заполните хотя бы название и ссылку'
+}
+
+function saveDraft(): void {
+  draft.content.ru.tags = parseTags(tagsRu.value)
+  draft.content.en.tags = parseTags(tagsEn.value)
+  if (!draft.content.ru.title.trim() || !draft.url.trim()) {
+    uploadError.value = 'Заполните хотя бы русское название и ссылку'
     return
   }
-  if (isNew.value) store.add({ ...draft })
-  else store.update(draft.id, { ...draft })
+  const { ru, en } = draft.content
+  if (!en.title.trim()) en.title = ru.title
+  if (!en.kind.trim()) en.kind = ru.kind
+  if (!en.description.trim()) en.description = ru.description
+  if (en.tags.length === 0) en.tags = [...ru.tags]
+  const payload = JSON.parse(JSON.stringify(draft)) as Work
+  if (isNew.value) store.add(payload)
+  else store.update(draft.id, payload)
   editorOpen.value = false
 }
 
@@ -94,7 +113,7 @@ function download(name: string, href: string): void {
 }
 function exportAll(): void {
   const list = store.items.map((work) => {
-    const copy: Work = { ...work, tags: [...work.tags] }
+    const copy = JSON.parse(JSON.stringify(work)) as Work
     if (copy.image) {
       delete copy.image
       copy.imageKey = work.id
@@ -176,12 +195,12 @@ function resetAll(): void {
         <li v-for="(work, i) in store.items" :key="work.id" class="row">
           <span class="row__idx">{{ work.index }}</span>
           <div class="row__thumb" :class="{ 'row__thumb--blank': !resolveImage(work) }">
-            <img v-if="resolveImage(work)" :src="resolveImage(work)" :alt="work.title" />
+            <img v-if="resolveImage(work)" :src="resolveImage(work)" :alt="work.content.ru.title" />
             <span v-else>нет обложки</span>
           </div>
           <div class="row__info">
-            <b class="row__title">{{ work.title }}</b>
-            <span class="row__kind">{{ work.kind || '—' }} · {{ work.year }}</span>
+            <b class="row__title">{{ work.content.ru.title }}</b>
+            <span class="row__kind">{{ work.content.ru.kind || '—' }} · {{ work.year }}</span>
             <a class="row__url" :href="work.url" target="_blank" rel="noopener">{{ work.url }}</a>
           </div>
           <div class="row__ops">
@@ -227,15 +246,6 @@ function resetAll(): void {
           <p v-if="uploadError" class="editor__err">{{ uploadError }}</p>
 
           <label class="fld"
-            ><span>Название *</span><input v-model="draft.title" class="inp"
-          /></label>
-          <label class="fld"
-            ><span>Категория</span><input v-model="draft.kind" class="inp"
-          /></label>
-          <label class="fld"
-            ><span>Описание</span><textarea v-model="draft.description" class="inp" rows="3" />
-          </label>
-          <label class="fld"
             ><span>Ссылка *</span><input v-model="draft.url" class="inp" placeholder="https://…"
           /></label>
           <div class="editor__two">
@@ -244,10 +254,43 @@ function resetAll(): void {
               <input v-model="draft.live" type="checkbox" /><span>Метка «в проде»</span>
             </label>
           </div>
-          <label class="fld"
-            ><span>Теги (через запятую)</span
-            ><input v-model="tagsInput" class="inp" placeholder="Vue 3, TypeScript"
-          /></label>
+
+          <div class="editor__group">
+            <h3 class="editor__group-title">Русская версия</h3>
+            <label class="fld"
+              ><span>Название *</span><input v-model="draft.content.ru.title" class="inp"
+            /></label>
+            <label class="fld"
+              ><span>Категория</span><input v-model="draft.content.ru.kind" class="inp"
+            /></label>
+            <label class="fld"
+              ><span>Описание</span
+              ><textarea v-model="draft.content.ru.description" class="inp" rows="3" />
+            </label>
+            <label class="fld"
+              ><span>Теги (через запятую)</span
+              ><input v-model="tagsRu" class="inp" placeholder="Vue 3, TypeScript"
+            /></label>
+          </div>
+
+          <div class="editor__group">
+            <h3 class="editor__group-title">English version</h3>
+            <p class="editor__group-hint">Пустые поля возьмут русский текст при сохранении.</p>
+            <label class="fld"
+              ><span>Title</span><input v-model="draft.content.en.title" class="inp"
+            /></label>
+            <label class="fld"
+              ><span>Category</span><input v-model="draft.content.en.kind" class="inp"
+            /></label>
+            <label class="fld"
+              ><span>Description</span
+              ><textarea v-model="draft.content.en.description" class="inp" rows="3" />
+            </label>
+            <label class="fld"
+              ><span>Tags (comma-separated)</span
+              ><input v-model="tagsEn" class="inp" placeholder="Vue 3, TypeScript"
+            /></label>
+          </div>
         </div>
 
         <div class="editor__foot">
@@ -554,6 +597,24 @@ function resetAll(): void {
   grid-template-columns: 1fr 1fr;
   gap: 14px;
   align-items: end;
+}
+.editor__group {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  border-top: 1px solid var(--line);
+  padding-top: 18px;
+}
+.editor__group-title {
+  font-family: var(--display);
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.editor__group-hint {
+  color: var(--muted);
+  font-size: 0.8rem;
+  margin-top: -6px;
 }
 .fld {
   display: flex;

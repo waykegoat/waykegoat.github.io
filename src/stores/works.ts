@@ -1,10 +1,10 @@
 import { reactive, watch } from 'vue'
-import { defaultWorks, type Work } from '@/data/works'
+import { defaultWorks, normalizeWork, type Work } from '@/data/works'
 
-const STORAGE_KEY = 'wayke.portfolio.works.v1'
+const STORAGE_KEY = 'wayke.portfolio.works.v2'
 
 function clone(list: Work[]): Work[] {
-  return list.map((w) => ({ ...w, tags: [...w.tags] }))
+  return list.map((work) => normalizeWork(JSON.parse(JSON.stringify(work))))
 }
 
 function load(): Work[] {
@@ -12,7 +12,7 @@ function load(): Work[] {
     const raw = localStorage.getItem(STORAGE_KEY)
     if (raw) {
       const parsed = JSON.parse(raw) as unknown
-      if (Array.isArray(parsed) && parsed.length > 0) return parsed as Work[]
+      if (Array.isArray(parsed) && parsed.length > 0) return parsed.map(normalizeWork)
     }
   } catch {
     return clone(defaultWorks)
@@ -45,16 +45,7 @@ export function newId(): string {
 }
 
 export function emptyWork(): Work {
-  return {
-    id: newId(),
-    index: '00',
-    title: '',
-    kind: '',
-    description: '',
-    tags: [],
-    url: '',
-    year: String(new Date().getFullYear()),
-  }
+  return normalizeWork({ id: newId() })
 }
 
 export function useWorks() {
@@ -62,7 +53,7 @@ export function useWorks() {
     items,
 
     add(work: Work): void {
-      items.push({ ...work, tags: [...work.tags] })
+      items.push(...clone([work]))
       reindex()
     },
 

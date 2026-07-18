@@ -1,31 +1,32 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { resolveImage, type Work } from '@/data/works'
+import { resolveImage, workContent, type Work } from '@/data/works'
 
-const { t } = useI18n()
+const { t, locale } = useI18n()
 const props = defineProps<{ work: Work }>()
 const cover = computed(() => resolveImage(props.work))
+const content = computed(() => workContent(props.work, locale.value))
 </script>
 
 <template>
   <a :href="work.url" target="_blank" rel="noopener" class="work reveal" data-cursor>
     <div class="work__media" :class="{ 'work__media--blank': !cover }">
-      <img v-if="cover" :src="cover" :alt="work.title" loading="lazy" />
-      <span v-else class="work__blank-title">{{ work.title }}</span>
+      <img v-if="cover" :src="cover" :alt="content.title" loading="lazy" />
+      <span v-else class="work__blank-title">{{ content.title }}</span>
       <span class="work__index">{{ work.index }}</span>
       <span v-if="work.live" class="work__live">● {{ t('works.live') }}</span>
       <span class="work__open">{{ t('works.open') }} <b>↗</b></span>
     </div>
     <div class="work__meta">
       <div class="work__head">
-        <h3 class="work__title">{{ work.title }}</h3>
+        <h3 class="work__title">{{ content.title }}</h3>
         <span class="work__year">{{ work.year }}</span>
       </div>
-      <p class="work__kind">{{ work.kind }}</p>
-      <p class="work__desc">{{ work.description }}</p>
+      <p class="work__kind">{{ content.kind }}</p>
+      <p class="work__desc">{{ content.description }}</p>
       <ul class="work__tags">
-        <li v-for="tag in work.tags" :key="tag">{{ tag }}</li>
+        <li v-for="tag in content.tags" :key="tag">{{ tag }}</li>
       </ul>
     </div>
   </a>

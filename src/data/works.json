@@ -2,90 +2,170 @@
   {
     "id": "rabochiy-resurs",
     "index": "01",
-    "title": "Рабочий ресурс",
-    "kind": "Коммерческий сайт",
-    "description": "Сайт по подбору разнорабочих в Московской области. Свой домен, заявки, адаптив.",
-    "tags": ["Vue 3", "Прод", "Адаптив"],
     "url": "https://rabochiy-resurs.ru/",
     "year": "2026",
     "live": true,
-    "imageKey": "rabochiy-resurs"
+    "imageKey": "rabochiy-resurs",
+    "content": {
+      "ru": {
+        "title": "Рабочий ресурс",
+        "kind": "Коммерческий сайт",
+        "description": "Сайт по подбору разнорабочих в Московской области. Свой домен, заявки, адаптив.",
+        "tags": ["Vue 3", "Прод", "Адаптив"]
+      },
+      "en": {
+        "title": "Rabochiy Resurs",
+        "kind": "Commercial website",
+        "description": "Blue-collar staffing website for the Moscow region. Custom domain, request forms, responsive.",
+        "tags": ["Vue 3", "Production", "Responsive"]
+      }
+    }
   },
   {
     "id": "fluxor",
     "index": "02",
-    "title": "Fluxor",
-    "kind": "realtime-API",
-    "description": "The edge API platform — a production-grade marketing site built with Vue 3.",
-    "tags": ["Vue", "TypeScript", "JavaScript"],
     "url": "https://waykegoat.github.io/dev/",
     "year": "2026",
-    "imageKey": "fluxor"
+    "imageKey": "fluxor",
+    "content": {
+      "ru": {
+        "title": "Fluxor",
+        "kind": "Realtime-API",
+        "description": "Маркетинговый сайт edge-API-платформы на Vue 3 — уровень прода, анимации, тёмная тема.",
+        "tags": ["Vue", "TypeScript", "JavaScript"]
+      },
+      "en": {
+        "title": "Fluxor",
+        "kind": "Realtime API",
+        "description": "The edge API platform — a production-grade marketing site built with Vue 3.",
+        "tags": ["Vue", "TypeScript", "JavaScript"]
+      }
+    }
   },
   {
     "id": "gk-drive",
     "index": "03",
-    "title": "ГК Драйв",
-    "kind": "Автосервис",
-    "description": "5 страниц, запись онлайн, прайс с фильтром по категориям, тёмная индустриальная тема.",
-    "tags": ["Vue 3", "TypeScript", "Vue Router"],
     "url": "https://waykegoat.github.io/autoservice/",
     "year": "2026",
-    "imageKey": "gk-drive"
+    "imageKey": "gk-drive",
+    "content": {
+      "ru": {
+        "title": "ГК Драйв",
+        "kind": "Автосервис",
+        "description": "5 страниц, запись онлайн, прайс с фильтром по категориям, тёмная индустриальная тема.",
+        "tags": ["Vue 3", "TypeScript", "Vue Router"]
+      },
+      "en": {
+        "title": "GK Drive",
+        "kind": "Auto service",
+        "description": "5 pages, online booking, price list with category filter, dark industrial theme.",
+        "tags": ["Vue 3", "TypeScript", "Vue Router"]
+      }
+    }
   },
   {
     "id": "fleur",
     "index": "04",
-    "title": "Салон «Флёр»",
-    "kind": "Салон красоты",
-    "description": "Галерея работ, мастера, запись с выбором услуги. Светлая элегантная эстетика.",
-    "tags": ["Vue 3", "TypeScript", "UI/UX"],
     "url": "https://waykegoat.github.io/beautysalon/",
     "year": "2026",
-    "imageKey": "fleur"
+    "imageKey": "fleur",
+    "content": {
+      "ru": {
+        "title": "Салон «Флёр»",
+        "kind": "Салон красоты",
+        "description": "Галерея работ, мастера, запись с выбором услуги. Светлая элегантная эстетика.",
+        "tags": ["Vue 3", "TypeScript", "UI/UX"]
+      },
+      "en": {
+        "title": "Salon Fleur",
+        "kind": "Beauty salon",
+        "description": "Portfolio gallery, team page, booking with service selection. Light elegant aesthetic.",
+        "tags": ["Vue 3", "TypeScript", "UI/UX"]
+      }
+    }
   },
   {
     "id": "terroir",
     "index": "05",
-    "title": "Ресторан «Терруар»",
-    "kind": "Ресторан",
-    "description": "Меню с фильтром, бронь столика с датой и временем. Тёмная атмосферная тема.",
-    "tags": ["React", "TypeScript", "React Router"],
     "url": "https://waykegoat.github.io/restaurant/",
     "year": "2026",
-    "imageKey": "terroir"
+    "imageKey": "terroir",
+    "content": {
+      "ru": {
+        "title": "Ресторан «Терруар»",
+        "kind": "Ресторан",
+        "description": "Меню с фильтром, бронь столика с датой и временем. Тёмная атмосферная тема.",
+        "tags": ["React", "TypeScript", "React Router"]
+      },
+      "en": {
+        "title": "Terroir Restaurant",
+        "kind": "Restaurant",
+        "description": "Filterable menu, table booking with date and time. Dark atmospheric theme.",
+        "tags": ["React", "TypeScript", "React Router"]
+      }
+    }
   },
   {
     "id": "kitchenroom",
     "index": "06",
-    "title": "Kitchen Room",
-    "kind": "Сайт студии",
-    "description": "Сайт кухонной студии: адаптивная вёрстка, галерея, форма заявки.",
-    "tags": ["Vue 3", "HTML/CSS"],
     "url": "https://waykegoat.github.io/kitchenroom/",
     "year": "2026",
-    "imageKey": "kitchenroom"
+    "imageKey": "kitchenroom",
+    "content": {
+      "ru": {
+        "title": "Kitchen Room",
+        "kind": "Сайт студии",
+        "description": "Сайт кухонной студии: адаптивная вёрстка, галерея, форма заявки.",
+        "tags": ["Vue 3", "HTML/CSS"]
+      },
+      "en": {
+        "title": "Kitchen Room",
+        "kind": "Studio website",
+        "description": "Kitchen studio website: responsive layout, gallery, request form.",
+        "tags": ["Vue 3", "HTML/CSS"]
+      }
+    }
   },
   {
     "id": "pravover",
     "index": "07",
-    "title": "Правовер",
-    "kind": "Юридические услуги",
-    "description": "Юридический SPA. Адаптив, маршрутизация, форма обратной связи.",
-    "tags": ["React", "TypeScript"],
     "url": "https://waykegoat.github.io/legalreact/",
     "year": "2026",
-    "imageKey": "pravover"
+    "imageKey": "pravover",
+    "content": {
+      "ru": {
+        "title": "Правовер",
+        "kind": "Юридические услуги",
+        "description": "Юридический SPA. Адаптив, маршрутизация, форма обратной связи.",
+        "tags": ["React", "TypeScript"]
+      },
+      "en": {
+        "title": "Pravover",
+        "kind": "Legal services",
+        "description": "Legal services SPA. Responsive, routing, contact form.",
+        "tags": ["React", "TypeScript"]
+      }
+    }
   },
   {
     "id": "kwork-scout",
     "index": "08",
-    "title": "Kwork Scout",
-    "kind": "Автоматизация для фрилансера",
-    "description": "Парсинг kwork.ru, скоринг заявок и авто-генерация КП на LLM-агентах. Веб-дашборд с live-статусом пайплайна.",
-    "tags": ["Python", "Playwright", "AI-агенты"],
     "url": "https://github.com/vasshaden/kwork-scout",
     "year": "2026",
-    "imageKey": "kwork-scout"
+    "imageKey": "kwork-scout",
+    "content": {
+      "ru": {
+        "title": "Kwork Scout",
+        "kind": "Автоматизация для фрилансера",
+        "description": "Парсинг kwork.ru, скоринг заявок и авто-генерация КП на LLM-агентах. Веб-дашборд с live-статусом пайплайна.",
+        "tags": ["Python", "Playwright", "AI-агенты"]
+      },
+      "en": {
+        "title": "Kwork Scout",
+        "kind": "Freelance automation",
+        "description": "Scrapes kwork.ru, scores leads and auto-generates proposals with LLM agents. Web dashboard with live pipeline status.",
+        "tags": ["Python", "Playwright", "AI agents"]
+      }
+    }
   }
 ]
