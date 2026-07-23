@@ -1,7 +1,29 @@
 [
   {
-    "id": "rabochiy-resurs",
+    "id": "aether",
     "index": "01",
+    "url": "https://waykegoat.github.io/aether-galaxy/",
+    "year": "2026",
+    "live": true,
+    "imageKey": "aether",
+    "content": {
+      "ru": {
+        "title": "AETHER",
+        "kind": "Процедурная вселенная",
+        "description": "Вся вселенная в браузере: сотни галактик на космической паутине, по 100 000 звёзд в каждой, свободный полёт с влётом в галактики и планеты. Ноль ассетов — всё из одного сида на GPU в реальном времени.",
+        "tags": ["Three.js", "WebGL/GLSL", "TypeScript"]
+      },
+      "en": {
+        "title": "AETHER",
+        "kind": "Procedural universe",
+        "description": "A whole universe in the browser: hundreds of galaxies on the cosmic web, 100k stars each, free-flight you steer into galaxies and planets. Zero assets — everything from one seed, real-time on the GPU.",
+        "tags": ["Three.js", "WebGL/GLSL", "TypeScript"]
+      }
+    }
+  },
+  {
+    "id": "rabochiy-resurs",
+    "index": "02",
     "url": "https://rabochiy-resurs.ru/",
     "year": "2026",
     "live": true,
@@ -23,7 +45,7 @@
   },
   {
     "id": "fluxor",
-    "index": "02",
+    "index": "03",
     "url": "https://waykegoat.github.io/dev/",
     "year": "2026",
     "imageKey": "fluxor",
@@ -44,7 +66,7 @@
   },
   {
     "id": "gk-drive",
-    "index": "03",
+    "index": "04",
     "url": "https://waykegoat.github.io/autoservice/",
     "year": "2026",
     "imageKey": "gk-drive",
@@ -65,7 +87,7 @@
   },
   {
     "id": "fleur",
-    "index": "04",
+    "index": "05",
     "url": "https://waykegoat.github.io/beautysalon/",
     "year": "2026",
     "imageKey": "fleur",
@@ -86,7 +108,7 @@
   },
   {
     "id": "terroir",
-    "index": "05",
+    "index": "06",
     "url": "https://waykegoat.github.io/restaurant/",
     "year": "2026",
     "imageKey": "terroir",
@@ -107,7 +129,7 @@
   },
   {
     "id": "kitchenroom",
-    "index": "06",
+    "index": "07",
     "url": "https://waykegoat.github.io/kitchenroom/",
     "year": "2026",
     "imageKey": "kitchenroom",
@@ -128,7 +150,7 @@
   },
   {
     "id": "pravover",
-    "index": "07",
+    "index": "08",
     "url": "https://waykegoat.github.io/legalreact/",
     "year": "2026",
     "imageKey": "pravover",
@@ -149,7 +171,7 @@
   },
   {
     "id": "kwork-scout",
-    "index": "08",
+    "index": "09",
     "url": "https://github.com/vasshaden/kwork-scout",
     "year": "2026",
     "imageKey": "kwork-scout",
